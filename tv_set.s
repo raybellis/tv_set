@@ -28,7 +28,7 @@
 		jmp		ServiceEntry
 		.byte		$82			; 6502
 		.byte		<_copyright - 1		; offset
-		.byte		$02			; version 02
+		.byte		$03			; version 03
 		.asciiz		"TV SET"
 		.asciiz		"0.3"
 _copyright:	.asciiz		"(C) Ray Bellis"
