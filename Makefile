@@ -3,24 +3,26 @@ DISK = 500
 AS = ca65
 LD = ld65
 
-tv255.ssd:	tv255.rom
-	$(RM) $@
-	beeb blank_ssd $@
-	beeb title $@ "TV255"
-	beeb putfile $@ $^
-
-tv255.rom:		tv255.o
+tv_set.rom:	tv_set.o
 	$(LD) --target bbc -o $@ $^ 
 
-tv255.o:	tv255.s
+tv_set.o:	tv_set.s
 	$(AS) -l $(^:.s=.lst) $^
+
+tv_set.s:	bbc.inc
+
+tv_set.ssd:	tv_set.rom
+	$(RM) $@
+	beeb blank_ssd $@
+	beeb title $@ "TVSET"
+	beeb putfile $@ $^
 
 .PHONY:	disk clean
 
-disk:	tv255.ssd
+disk:	tv_set.ssd
 	beeb dkill -y ${DISK}
 	beeb dput_ssd ${DISK} $^
 	diskutil eject "/Volumes/NO NAME"
 
 clean:
-	$(RM) tv255.ssd tv255.rom tv255.o tv255.lst
+	$(RM) tv_set.ssd tv_set.rom tv_set.o tv_set.lst
